@@ -1,11 +1,12 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {Avatar, Button, Paper, Grid, Typography, Container} from '@material-ui/core'
 import useStyles from './styles'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import Input from './input'
 //import {useDispatch} from 'react-redux'
 //import { signUp, signIn, logOut } from '../../actions/auth'
-import {useNavigate} from 'react-router-dom'
+import {useNavigate, useLocation} from 'react-router-dom'
+import Home from '../home/home';
 
 const users = [
     {
@@ -56,6 +57,9 @@ const Auth = () => {
     //const [isSignup, setIsSignup] = useState(false)
     const [showPassword, setShowPassword] = useState(false)
     const [formData, setFormData] = useState(initialState)
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
+    const location = useLocation();
+
     const handleSubmit = (e) => {
         e.preventDefault()
         const user = users.filter((user) => user.username === formData.username)
@@ -76,7 +80,21 @@ const Auth = () => {
     //const switchMode = () => setIsSignup((prevIsSignup) => !prevIsSignup)
     const handleShowPassword = () => setShowPassword((prevShowPassword) => !prevShowPassword)
 
+    useEffect(() => {
+        //const token = user?.token;
+    
+        //if (token) {
+        //  const decodedToken = decode(token);
+    
+        //  if (decodedToken.exp * 1000 < new Date().getTime()) logout();
+        //}
+    
+        setUser(JSON.parse(localStorage.getItem('profile')));
+      }, [location]);
+    
     return (
+        <>
+        {user ? <Home /> :
         <Container component="main" maxWidth="xs">
             <Paper className={classes.paper} elevation={3}>
                 <Avatar className={classes.avatar}>
@@ -91,7 +109,8 @@ const Auth = () => {
                 <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>Sign In</Button>
                 </form>
             </Paper>
-        </Container>
+        </Container>}
+        </>
     )
 }
 

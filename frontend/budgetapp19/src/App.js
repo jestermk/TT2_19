@@ -14,7 +14,7 @@ const App = () => {
         <Routes>
           <Route path="/" exact element={<Auth/>}/>
           <Route path="/home" exact element={<Home/>}/>
-          <Route path="/projects/:id" element={<Project />} />
+          <Route path="/home/project/:id" element={<Project />} />
         </Routes>
       </Container>
     </BrowserRouter>
