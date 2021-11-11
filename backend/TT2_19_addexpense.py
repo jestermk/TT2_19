@@ -40,15 +40,22 @@ class AddExpense(Form):
     send = SubmitField('send')
 
 
-@app.route('/login', methods = ['POST', 'GET'])
+@app.route('/add_expense', methods = ['POST', 'GET'])
 def add_expense():
     if request.method == 'GET':
         return "Add new expense record"
      
     if request.method == 'POST':
+        id_field = request.form['id_field']
+        project_id = request.form['project_id']
+        category_id = request.form['category_id']
         name = request.form['name']
-        age = request.form['discretion']
-        age = request.form['armor']
+        description = request.form['description']
+        amount = request.form['description']
+        created_at = request.form['created_at']
+        created_by = request.form['created_by']
+        updated_at = request.form['updated_at']
+        updated_by = request.form['updated_by']
         cursor = mysql.connection.cursor()
         cursor.execute(''' INSERT INTO info_table VALUES(%s,%s)''',(name,age))
         mysql.connection.commit()
