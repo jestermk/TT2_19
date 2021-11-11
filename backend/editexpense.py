@@ -38,25 +38,29 @@ class EditExpense(Form):
 
 # result of edit - this function updates the record
 @app.route('/edit_expense', methods=['POST'])
-def edit_expense():
-    id = request.form['id_field']
-    # call up the record from the database
-    expense = EditExpense.query.filter(EditExpense.id == id).first()
-    # update all values
-    expense.project_id  = request.form['project_id']
-    expense.category_id = request.form['category_id']
-    expense.name        = request.form['name']
-    expense.description = request.form['description']
-    expense.amount      = request.form['description']
-    expense.updated_at  = DateTimeField(datetime.utcnow)
-    expense.updated_by  = request.form['updated_by']
-
-    form1 = EditExpense()
-    if form1.validate_on_submit():
-        # update database record
-        db.session.commit()
-        # create a message to send to the template
-        message = f"The data for expense {expense.name} has been updated."
+def edit_expense(project_id, user_id):
+    form = EditExpense()
+    if request.method == 'GET':
+        return "Add new expense record"
+     
+    if request.method == 'POST':
+        id_field    = form.id_field.data
+        project_id  = project_id
+        category_id = form.category_id.data
+        name        = form.name.data
+        description = form.description.data
+        amount      = form.amount.data
+        created_at  = form.created_at
+        created_by  = user_id
+        updated_at  = form.updated_at.data
+        updated_by  = form.updated_by.data
+        cursor = mysql.connection.cursor()
+        cursor.execute(''' UPDATE info_table VALUES(%s,%s,%s,%s,%s,%f,%s,%s,%s,%s) WHERE id_field=%s''',(id_field,
+            project_id, category_id, name, description, amount, datetime.strftime(created_at),
+            created_by, datetime.strftime(updated_at), updated_by), id_field)
+        mysql.connection.commit()
+        cursor.close()
+        return
 
 @app.route('/remove_expense', methods = ['POST'])
 def remove_expense(id_field):
