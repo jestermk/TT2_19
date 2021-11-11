@@ -7,6 +7,44 @@ import Input from './input'
 //import { signUp, signIn, logOut } from '../../actions/auth'
 import {useNavigate} from 'react-router-dom'
 
+const users = [
+    {
+        "id": 1,
+        "username": "user101",
+        "password": "123456",
+        "name": "Jacky",
+        "appointment": "Project Lead"
+    },
+    {
+        "id": 2,
+        "username": "user102",
+        "password": "123456",
+        "name": "Jane",
+        "appointment": "Project Manager"
+    },
+    {
+        "id": 3,
+        "username": "user103",
+        "password": "123456",
+        "name": "Tom",
+        "appointment": "Project Manager"
+    },
+    {
+        "id": 4,
+        "username": "user104",
+        "password": "123456",
+        "name": "Helen",
+        "appointment": "Project Manager"
+    },
+    {
+        "id": 5,
+        "username": "user105",
+        "password": "123456",
+        "name": "Mark",
+        "appointment": "Senior Project Manager"
+    }
+]
+
 const Auth = () => {
     const classes = useStyles()
     //const dispatch = useDispatch()
