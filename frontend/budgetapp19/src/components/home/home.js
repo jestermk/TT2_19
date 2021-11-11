@@ -43,6 +43,11 @@ const Home = () => {
     return priceString;
   }
 
+  function getLink(id) {
+      console.log("/home/project/" + id)
+    return '/home/project/' + id
+  }
+
   return (
     <div>
         <br />
@@ -53,8 +58,11 @@ const Home = () => {
             projects.map((proj, index) => (
               <>
                 <br />
-                <ListGroup.Item
-                  as="li"
+                <ListGroup.Item 
+                className="list-item"
+                action
+                href={getLink(proj.id)}
+                // as="li"
                   className="d-flex justify-content-between align-items-start"
                 >
                   <div className="ms-2 me-auto">
