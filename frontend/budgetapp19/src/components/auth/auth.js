@@ -19,6 +19,7 @@ const Auth = () => {
     const [showPassword, setShowPassword] = useState(false)
     const [formData, setFormData] = useState(initialState)
     const handleSubmit = (e) => {
+        localStorage.setItem('profile', JSON.stringify(formData))
         e.preventDefault()
         history('/home')
     }
