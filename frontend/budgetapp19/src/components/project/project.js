@@ -2,6 +2,7 @@ import { Button, ListGroup, Badge, Container } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Modal } from "react-bootstrap";
+import {Grid } from '@material-ui/core'
 // import './project.css' from "./";
 
 const expenses = [
@@ -44,9 +45,15 @@ function formatPrice(price) {
 function Project() {
   let subtitle;
   const [modal, setModal] = useState(false);
+  const [modal2, setModal2] = useState(false);
   let { id } = useParams();
   const projExpenses = expenses.filter((exp) => exp.project_id == id);
   console.log(projExpenses);
+  const [ex, setEx] = useState({
+    name: "",
+    description:"",
+    amount: 0,
+  });
 
   function handleAdd() {
     // api call to be made
@@ -54,14 +61,32 @@ function Project() {
     setModal(true);
   }
 
+  function handleEdit() {
+    setModal2(true);
+  }
+
   function handleClose() {
     setModal(false);
+  }
+
+  function handleClose2() {
+    console.log(modal2)
+    setModal2(false);
   }
 
   function handleSave() {
     // api call to save expense here
     setModal(false);
   }
+
+  function handleSave2() {
+    // api call to edit expense here
+    setModal2(false);
+  }
+
+  const handleChange = (e) => {
+    setEx({...ex, [e.target.name]: e.target.value})
+}
 
   return (
     <>
@@ -76,9 +101,15 @@ function Project() {
               keyboard={false}
             >
               <Modal.Header closeButton>
-                <Modal.Title>Modal title</Modal.Title>
+                <Modal.Title>Add Expense</Modal.Title>
               </Modal.Header>
-              <Modal.Body>Insert form content here!</Modal.Body>
+              <Modal.Body>
+              <form onSubmit={handleSave}>
+                    Name: <input name="name" label="name" handleChange={handleChange} autoFocus/><br/><br/>
+                    Description: <input name="description" label="description" handleChange={handleChange} autoFocus/><br/><br/>
+                    Amount: <input name="amount" label="name" handleChange={handleChange} autoFocus/><br/><br/>
+                </form>
+              </Modal.Body>
               <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>
                   Close
@@ -89,8 +120,36 @@ function Project() {
               </Modal.Footer>
             </Modal>
           )}
+          {modal2 && (
+            <Modal
+              show={modal2}
+              onHide={handleClose2}
+              backdrop="static"
+              keyboard={false}
+            >
+              <Modal.Header closeButton>
+                <Modal.Title>Edit Expense</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <form onSubmit={handleSave2}>
+                    Name: <input name="name" label="name" handleChange={handleChange} autoFocus/><br/><br/>
+                    Description: <input name="description" label="description" handleChange={handleChange} autoFocus/><br/><br/>
+                    Amount: <input name="amount" label="name" handleChange={handleChange} autoFocus/><br/><br/>
+                </form>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose2}>
+                  Close
+                </Button>
+                <Button onClick={handleSave2} variant="primary">
+                  Save
+                </Button>
+              </Modal.Footer>
+            </Modal>
+          )}
           <>
-            <Button onClick={handleAdd}> Add Expense </Button>
+              <Button onClick={handleAdd}> Add Expense</Button>
+              
             <ListGroup as="ol" numbered>
               {projExpenses.length ? (
                 projExpenses.map((exp, index) => (
@@ -106,7 +165,8 @@ function Project() {
                       </div>
                       <Badge variant="primary" pill>
                         {formatPrice(exp.amount)}
-                      </Badge>
+                      </Badge>&nbsp;&nbsp;
+                      <Button onClick={handleEdit}> Edit Expense </Button>
                     </ListGroup.Item>
                   </>
                 ))
