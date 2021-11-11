@@ -5,12 +5,12 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import Input from './input'
 //import {useDispatch} from 'react-redux'
 //import { signUp, signIn, logOut } from '../../actions/auth'
-//import {useNavigate} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 
 const Auth = () => {
     const classes = useStyles()
     //const dispatch = useDispatch()
-    //const history = useNavigate()
+    const history = useNavigate()
     const initialState = {
         username : '',
         password : '',
@@ -20,7 +20,7 @@ const Auth = () => {
     const [formData, setFormData] = useState(initialState)
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log(formData)
+        history('/home')
     }
     const handleChange = (e) => {
         setFormData({...formData, [e.target.name]: e.target.value})
