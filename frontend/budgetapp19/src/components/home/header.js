@@ -7,7 +7,7 @@ import { useLocation } from "react-router-dom";
 function Header() {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
   const history = useNavigate();
-  const location = useLocation()
+  const location = useLocation();
   const logout = () => {
     history("/");
     setUser(null);
