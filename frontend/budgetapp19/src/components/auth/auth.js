@@ -58,6 +58,7 @@ const Auth = () => {
     const [showPassword, setShowPassword] = useState(false)
     const [formData, setFormData] = useState(initialState)
     const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
+    const [currentUser, setCurrent] = useState({});
     const location = useLocation();
 
     const handleSubmit = (e) => {
@@ -67,6 +68,7 @@ const Auth = () => {
             alert("No such user!")
         } else {
             if (user[0].password === formData.password) {
+                setCurrent(user);
                 localStorage.setItem('profile', JSON.stringify(formData))
                 history('/home')
             } else {
@@ -94,7 +96,7 @@ const Auth = () => {
     
     return (
         <>
-        {user ? <Home /> :
+        {user ? <Home user={currentUser.id}/> :
         <Container component="main" maxWidth="xs">
             <Paper className={classes.paper} elevation={3}>
                 <Avatar className={classes.avatar}>

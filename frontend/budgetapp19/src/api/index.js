@@ -10,6 +10,6 @@ const API = axios.create({ baseURL: 'http://127.0.0.1:5000/' });
 // return req;
 //});
 
-export const getProjects = () => API.get('/projects');
+export const getProjects = (id) => API.get('/projects/' + id);
 
 //export const signIn = (formData) => API.post('/users/signin', formData);
