@@ -4,14 +4,19 @@ from flask import jsonify
 from flask_restful import Resource, Api
 from flaskext.mysql import MySQL
 from contextlib import closing
+from flask_cors import CORS 
+import os 
+from dotenv import load_dotenv
 
+load_dotenv()
 app = Flask(__name__)
 
 # Create api instance
 api = Api(app)
+CORS(app)
 
 app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'Login@2020'
+app.config['MYSQL_DATABASE_PASSWORD'] = os.environ.get('PASSWORD')
 app.config['MYSQL_DATABASE_DB'] = 'project_expenses'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 
