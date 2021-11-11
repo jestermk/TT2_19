@@ -134,7 +134,7 @@ function Project() {
               <Modal.Body>
                 <form onSubmit={handleSave2}>
                     Name: <input name="name" label="name" value={ex.name} handleChange={handleChange} autoFocus/><br/><br/>
-                    Description:<textarea name="description" label="description" value={ex.description} handleChange={handleChange} autoFocus/><br/><br/>
+                    Description:<textarea name="description" rows="5" label="description" value={ex.description} handleChange={handleChange} autoFocus/><br/><br/>
                     Amount: <input name="amount" label="name" value={ex.amount} handleChange={handleChange} autoFocus/><br/><br/>
                 </form>
               </Modal.Body>
