@@ -47,8 +47,29 @@ class Projects(Resource):
         except Exception as e:
             return json.dumps({'error':str(e)})
 
+
+class expense(Resource):
+    def get(self, proj_id):
+        try:
+            with closing(mysql.connect()) as conn:
+                with closing(conn.cursor()) as cursor:
+                    conn = mysql.connect()
+                    cursor = conn.cursor(pymysql.cursors.DictCursor)
+                    cursor.execute("""select * FROM expense where project_id=%s""", proj_id)
+                    rows = cursor.fetchall()
+                    
+                    # Add count check
+                    if (len(rows)> 0):
+                        return jsonify(rows)
+                    else:
+                        return {"message":"No Data"}
+        except Exception as e:
+            return json.dumps({'error':str(e)})
+        
+
 #API resource routes
 api.add_resource(Projects, '/projects/<int:user_id>', endpoint='projects')
+api.add_resource(expense, '/expense/<int:proj_id>', endpoint='expense')
 
 if __name__ == "__main__":
     app.run(debug=True)
