@@ -1,15 +1,15 @@
 import React, { useState } from "react";
-import { Button } from "@material-ui/core";
-import { useNavigate } from "react-router";
+// import { useNavigate } from "react-router";
+import { Container, ListGroup, Badge } from "react-bootstrap";
 
 const Home = () => {
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
-  const history = useNavigate();
-  const logout = () => {
-    history("/");
-    setUser(null);
-    localStorage.clear();
-  };
+//   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
+//   const history = useNavigate();
+//   const logout = () => {
+//     history("/");
+//     setUser(null);
+//     localStorage.clear();
+//   };
   const projects = [
     {
       id: 1,
@@ -45,8 +45,9 @@ const Home = () => {
 
   return (
     <div>
-      <Container>
         <br />
+        <h2> Your Projects </h2>
+      <Container>
         <ListGroup as="ol" numbered>
           {projects &&
             projects.map((proj, index) => (
@@ -68,9 +69,6 @@ const Home = () => {
             ))}
         </ListGroup>
       </Container>
-      <Button variant="contained" color="secondary" onClick={logout}>
-        Logout
-      </Button>
     </div>
   );
 };
