@@ -1,22 +1,23 @@
-import './App.css';
+import {Container, AppBar, Typography, Grow, Grid} from '@material-ui/core'
 import "bootstrap/dist/css/bootstrap.min.css";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Header from "./components/Header";
-import Home from "./components/Home/Home";
-import Project from "./components/Project/Project";
-
-function App() {
+import Auth from './components/auth/auth'
+import Home from './components/home/home'
+import Project from "./components/project/project";
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+const App = () => {
+  
   return (
-    <Router>
-      <Header />
-      <div>
-          <Routes> 
-            <Route exact path="/" element={<Home/>} />
-            <Route exact path="/projects/:id" element={<Project />} />
-          </Routes>
-        </div>
-    </Router>
-  );
+    <BrowserRouter>
+      <Container maxWidth="lg">
+        <Routes>
+          <Route path="/" exact element={<Auth/>}/>
+          <Route path="/home" exact element={<Home/>}/>
+          <Route path="/projects/:id" element={<Project />} />
+        </Routes>
+      </Container>
+    </BrowserRouter>
+  )
 }
 
-export default App;
+export default App
+
