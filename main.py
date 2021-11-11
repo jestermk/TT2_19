@@ -24,7 +24,6 @@ mysql.init_app(app)
 #Create an instance of Flask RESTful API
 api = Api(app)
 
-
 class Projects(Resource):
     def get(self, user_id):
         try:
