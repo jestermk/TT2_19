@@ -1,4 +1,4 @@
-#import pymysql
+import pymysql
 from flask import Flask, json, request
 from flask import jsonify
 from flask_restful import Resource, Api
@@ -24,13 +24,14 @@ mysql.init_app(app)
 #Create an instance of Flask RESTful API
 api = Api(app)
 
+
 class Projects(Resource):
     def get(self, user_id):
         try:
             with closing(mysql.connect()) as conn:
                 with closing(conn.cursor()) as cursor:
                     conn = mysql.connect()
-                    cursor = conn.cursor()
+                    cursor = conn.cursor(pymysql.cursors.DictCursor)
                     cursor.execute("""select * FROM project where user_id=%s""", user_id)
                     rows = cursor.fetchall()
                     
