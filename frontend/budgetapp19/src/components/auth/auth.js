@@ -67,7 +67,8 @@ const Auth = () => {
             alert("No such user!")
         } else {
             if (user[0].password === formData.password) {
-                localStorage.setItem('profile', JSON.stringify(formData))
+                let profile = {...formData, id: user[0].id}
+                localStorage.setItem('profile', JSON.stringify(profile))
                 history('/home')
             } else {
                 alert("Wrong credentials!")
@@ -94,7 +95,7 @@ const Auth = () => {
     
     return (
         <>
-        {user ? <Home /> :
+        {user ? <Home/> :
         <Container component="main" maxWidth="xs">
             <Paper className={classes.paper} elevation={3}>
                 <Avatar className={classes.avatar}>

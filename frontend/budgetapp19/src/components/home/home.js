@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // import { useNavigate } from "react-router";
 import { Container, ListGroup, Badge } from "react-bootstrap";
+import { getProjects } from "../../api/index";
 
 const Home = () => {
 //   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
@@ -10,7 +11,8 @@ const Home = () => {
 //     setUser(null);
 //     localStorage.clear();
 //   };
-  const projects = [
+const [projects, setProjects] = useState([]);
+  const projs = [
     {
       id: 1,
       user_id: 4,
@@ -46,6 +48,26 @@ const Home = () => {
   function getLink(id) {
     return '/home/project/' + id
   }
+
+  useEffect(() => {
+    async function fetchProjects() {
+        // console.log(this.props)
+        let profile = JSON.parse(localStorage.getItem('profile'));
+        let projList = await getProjects(profile.id);
+        // let projList = await getProjects(this.props.user);
+        setProjects(projList.data);
+      }
+      fetchProjects()
+      console.log(projects)
+      //const token = user?.token;
+
+    //if (token) {
+    //  const decodedToken = decode(token);
+
+    //  if (decodedToken.exp * 1000 < new Date().getTime()) logout();
+    //}
+  }, []);
+
 
   return (
     <div>
