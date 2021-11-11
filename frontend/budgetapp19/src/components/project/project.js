@@ -62,6 +62,7 @@ function Project() {
   }
 
   function handleEdit() {
+    //setEx[projExpenses.index]
     setModal2(true);
   }
 
