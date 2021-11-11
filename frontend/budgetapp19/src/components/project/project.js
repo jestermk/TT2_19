@@ -42,7 +42,6 @@ function formatPrice(price) {
 }
 
 function Project() {
-  let subtitle;
   const [modal, setModal] = useState(false);
   let { id } = useParams();
   const projExpenses = expenses.filter((exp) => exp.project_id == id);

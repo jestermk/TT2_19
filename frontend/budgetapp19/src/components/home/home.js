@@ -1,40 +1,12 @@
 import React, { useEffect, useState } from "react";
 // import { useNavigate } from "react-router";
-import { Container, ListGroup, Badge } from "react-bootstrap";
+import { Container, ListGroup, ListGroupItem, Badge } from "react-bootstrap";
 import { getProjects } from "../../api/index";
+import "./home.css";
 
 const Home = () => {
-//   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
-//   const history = useNavigate();
-//   const logout = () => {
-//     history("/");
-//     setUser(null);
-//     localStorage.clear();
-//   };
-const [projects, setProjects] = useState([]);
-  const projs = [
-    {
-      id: 1,
-      user_id: 4,
-      name: "RTF",
-      budget: 12000,
-      description: "Realtime Face Recogniton",
-    },
-    {
-      id: 2,
-      user_id: 1,
-      name: "SWT",
-      budget: 80000,
-      description: "Smart Watch Tracker",
-    },
-    {
-      id: 3,
-      user_id: 2,
-      name: "ULS",
-      budget: 11000,
-      description: "Upgrade Legacy System",
-    },
-  ];
+    const [user, setUser] = useState({});
+  const [projects, setProjects] = useState([]);
 
   function formatPrice(price) {
     let priceString = price.toString();
@@ -46,58 +18,56 @@ const [projects, setProjects] = useState([]);
   }
 
   function getLink(id) {
-    return '/home/project/' + id
+    return "/home/project/" + id;
   }
 
   useEffect(() => {
     async function fetchProjects() {
-        try {
-            // console.log(this.props)
-            let profile = JSON.parse(localStorage.getItem('profile'));
-            let projList = await getProjects(profile.id);
-            // let projList = await getProjects(this.props.user);
-            setProjects(projList.data);
-        } catch(err) {
-            console.log(err)
-        }
+      try {
+        let profile = JSON.parse(localStorage.getItem("profile"));
+        let projList = await getProjects(profile.id);
+        setProjects(projList.data);
+        setUser(profile);
+      } catch (err) {
+        console.log(err);
       }
-      fetchProjects()
-      console.log(projects)
-      //const token = user?.token;
-
-    //if (token) {
-    //  const decodedToken = decode(token);
-
-    //  if (decodedToken.exp * 1000 < new Date().getTime()) logout();
-    //}
+    }
+    fetchProjects();
+    console.log(projects);
   }, []);
-
 
   return (
     <div>
-        <br />
-        <h2> Your Projects </h2>
+      <br />
       <Container>
+          <div className="central">
+      <h1> Hi {user.username}, Welcome to your Dashboard! </h1>
+        </div>
+      <br />
+      <h2> Your Projects </h2>
         <ListGroup as="ol" numbered>
           {projects.length ? (
             projects.map((proj, index) => (
               <>
                 <br />
-                <ListGroup.Item 
-               action
-                href={getLink(proj.id)}
+                <ListGroupItem
+                  action
+                  href={getLink(proj.id)}
                   className="d-flex justify-content-between align-items-start"
                 >
                   <div className="ms-2 me-auto">
                     <div className="fw-bold">{proj.name}</div>
                     {proj.description}
                   </div>
-                  <Badge variant="primary" pill>
+                  <Badge className="badge" pill>
                     {formatPrice(proj.budget)}
                   </Badge>
-                </ListGroup.Item>
+                </ListGroupItem>
               </>
-            ))) : ( <div> You have no projects yet! </div> )}
+            ))
+          ) : (
+            <div> You have no projects yet! </div>
+          )}
         </ListGroup>
       </Container>
     </div>

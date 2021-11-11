@@ -1,3 +1,14 @@
-.list-item {
-    cursor: pointer;
+.list-group-item:focus {
+    background-color: rgb(195, 203, 224);
+    color: rgb(70, 68, 68);
+}
+
+.badge {
+    background-color: rgb(56, 71, 112)
+}
+
+.central {
+    display: flex;
+    justify-content: center;
+    color: rgb(56, 71, 112)
 }
