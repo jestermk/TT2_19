@@ -51,8 +51,10 @@ const [projects, setProjects] = useState([]);
 
   useEffect(() => {
     async function fetchProjects() {
-        console.log(this.props)
-        let projList = await getProjects(this.props.user);
+        // console.log(this.props)
+        let profile = JSON.parse(localStorage.getItem('profile'));
+        let projList = await getProjects(profile.id);
+        // let projList = await getProjects(this.props.user);
         setProjects(projList.data);
       }
       fetchProjects()
