@@ -1,6 +1,7 @@
 import { ListGroup, Badge, Container } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+// import './project.css' from "./";
 
 const expenses = [
   {

@@ -51,14 +51,17 @@ const [projects, setProjects] = useState([]);
 
   useEffect(() => {
     async function fetchProjects() {
-        // console.log(this.props)
-        let profile = JSON.parse(localStorage.getItem('profile'));
-        let projList = await getProjects(profile.id);
-        // let projList = await getProjects(this.props.user);
-        setProjects(projList.data);
+        try {
+            // console.log(this.props)
+            let profile = JSON.parse(localStorage.getItem('profile'));
+            let projList = await getProjects(profile.id);
+            // let projList = await getProjects(this.props.user);
+            setProjects(projList.data);
+        } catch(err) {
+            console.log(err)
+        }
       }
       fetchProjects()
-      console.log(projects)
       //const token = user?.token;
 
     //if (token) {
@@ -75,13 +78,12 @@ const [projects, setProjects] = useState([]);
         <h2> Your Projects </h2>
       <Container>
         <ListGroup as="ol" numbered>
-          {projects &&
+          {projects.length ? (
             projects.map((proj, index) => (
               <>
                 <br />
                 <ListGroup.Item 
-                className="list-item"
-                action
+               action
                 href={getLink(proj.id)}
                   className="d-flex justify-content-between align-items-start"
                 >
@@ -94,7 +96,7 @@ const [projects, setProjects] = useState([]);
                   </Badge>
                 </ListGroup.Item>
               </>
-            ))}
+            ))) : ( <div> You have no projects yet! </div> )}
         </ListGroup>
       </Container>
     </div>
