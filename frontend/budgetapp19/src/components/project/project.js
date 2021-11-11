@@ -50,8 +50,6 @@ function Project() {
   const [expList, setExpense] = useState([]);
   let { id } = useParams();
   projectID = id;
-  // const projExpenses = expenses.filter((exp) => exp.project_id == id);
-  // console.log(projExpenses);
   const [ex, setEx] = useState({
     name: "",
     description:"",
@@ -65,7 +63,7 @@ function Project() {
   }
 
   const handleEdit = (index) => {
-    setEx(projExpenses[index])
+    setEx(expList[index])
     setModal2(true);
   }
 
