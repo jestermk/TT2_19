@@ -44,7 +44,6 @@ const Home = () => {
   }
 
   function getLink(id) {
-      console.log("/home/project/" + id)
     return '/home/project/' + id
   }
 
@@ -62,7 +61,6 @@ const Home = () => {
                 className="list-item"
                 action
                 href={getLink(proj.id)}
-                // as="li"
                   className="d-flex justify-content-between align-items-start"
                 >
                   <div className="ms-2 me-auto">

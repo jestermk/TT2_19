@@ -1,4 +1,6 @@
 import { ListGroup, Badge, Container } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 const expenses = [
   {
@@ -38,13 +40,18 @@ function formatPrice(price) {
 }
 
 function Project() {
+  // const [projExpenses, setExpenses] = useState([])
+  let { id } = useParams();
+  const projExpenses =  expenses.filter(exp => exp.project_id == id)
+  console.log(projExpenses)
+
   return (
     <>
       <Container>
         <br />
         <ListGroup as="ol" numbered>
-          {expenses &&
-            expenses.map((exp, index) => (
+          {projExpenses.length ? (
+            projExpenses.map((exp, index) => (
               <>
                 <br />
                 <ListGroup.Item
@@ -60,7 +67,7 @@ function Project() {
                   </Badge>
                 </ListGroup.Item>
               </>
-            ))}
+          ))) : ( <div> There are no expenses yet! </div> )}
         </ListGroup>
       </Container>
     </>
