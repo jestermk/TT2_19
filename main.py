@@ -33,7 +33,12 @@ class Projects(Resource):
                     cursor = conn.cursor()
                     cursor.execute("""select * FROM project where user_id=%s""", user_id)
                     rows = cursor.fetchall()
-                    return jsonify(rows)
+                    
+                    # Add count check
+                    if (len(rows)> 0):
+                        return jsonify(rows)
+                    else:
+                        return {"message":"No Data"}
         except Exception as e:
             return json.dumps({'error':str(e)})
 
