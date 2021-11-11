@@ -62,6 +62,7 @@ const [projects, setProjects] = useState([]);
         }
       }
       fetchProjects()
+      console.log(projects)
       //const token = user?.token;
 
     //if (token) {
