@@ -57,9 +57,18 @@ const Auth = () => {
     const [showPassword, setShowPassword] = useState(false)
     const [formData, setFormData] = useState(initialState)
     const handleSubmit = (e) => {
-        localStorage.setItem('profile', JSON.stringify(formData))
         e.preventDefault()
-        history('/home')
+        const user = users.filter((user) => user.username === formData.username)
+        if (!user.length) {
+            alert("No such user!")
+        } else {
+            if (user[0].password === formData.password) {
+                localStorage.setItem('profile', JSON.stringify(formData))
+                history('/home')
+            } else {
+                alert("Wrong credentials!")
+            }
+        }
     }
     const handleChange = (e) => {
         setFormData({...formData, [e.target.name]: e.target.value})
