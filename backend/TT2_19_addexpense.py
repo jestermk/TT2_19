@@ -49,20 +49,21 @@ class AddExpense(Form):
 
 @app.route('/add_expense/<project_id>/<user_id>', methods = ['POST', 'GET'])
 def add_expense(project_id, user_id):
+    form = AddExpense()
     if request.method == 'GET':
         return "Add new expense record"
      
     if request.method == 'POST':
-        id_field    = request.form['id_field']
+        id_field    = form.id_field.data
         project_id  = project_id
-        category_id = request.form['category_id']
-        name        = request.form['name']
-        description = request.form['description']
-        amount      = request.form['description']
-        created_at  = request.form['created_at']
+        category_id = form.category_id.data
+        name        = form.name.data
+        description = form.description.data
+        amount      = form.amount.data
+        created_at  = form.created_at
         created_by  = user_id
-        updated_at  = request.form['updated_at']
-        updated_by  = request.form['updated_by']
+        updated_at  = form.updated_at.data
+        updated_by  = form.updated_by.data
         cursor = mysql.connection.cursor()
         cursor.execute(''' INSERT INTO info_table VALUES(%s,%s,%s,%s,%s,%f,%s,%s,%s,%s)''',(id_field,
             project_id, category_id, name, description, amount, datetime.strftime(created_at),
