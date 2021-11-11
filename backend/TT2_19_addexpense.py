@@ -39,27 +39,35 @@ class AddExpense(Form):
     updated_by = 0 #user instance
     send = SubmitField('send')
 
+    def __init__(self, project_id = '', user_id = '', *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if project_id:
+            self.patients.choices = project_id
+        if user_id:
+            self.patients.choices = user_id
 
-@app.route('/add_expense', methods = ['POST', 'GET'])
-def add_expense():
+
+@app.route('/add_expense/<project_id>/<user_id>', methods = ['POST', 'GET'])
+def add_expense(project_id, user_id):
+    form = AddExpense()
     if request.method == 'GET':
         return "Add new expense record"
      
     if request.method == 'POST':
-        id_field    = request.form['id_field']
-        project_id  = request.form['project_id']
-        category_id = request.form['category_id']
-        name        = request.form['name']
-        description = request.form['description']
-        amount      = request.form['description']
-        created_at  = request.form['created_at']
-        created_by  = request.form['created_by']
-        updated_at  = request.form['updated_at']
-        updated_by  = request.form['updated_by']
+        id_field    = form.id_field.data
+        project_id  = project_id
+        category_id = form.category_id.data
+        name        = form.name.data
+        description = form.description.data
+        amount      = form.amount.data
+        created_at  = form.created_at
+        created_by  = user_id
+        updated_at  = form.updated_at.data
+        updated_by  = form.updated_by.data
         cursor = mysql.connection.cursor()
         cursor.execute(''' INSERT INTO info_table VALUES(%s,%s,%s,%s,%s,%f,%s,%s,%s,%s)''',(id_field,
             project_id, category_id, name, description, amount, datetime.strftime(created_at),
             created_by, datetime.strftime(updated_at), updated_by))
         mysql.connection.commit()
         cursor.close()
-        return f"Done!!"
+        return
