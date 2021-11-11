@@ -55,32 +55,32 @@ function Project() {
     amount: 0,
   });
 
-  function handleAdd() {
+  const handleAdd = () => {
     // api call to be made
     console.log(id);
     setModal(true);
   }
 
-  function handleEdit() {
-    //setEx[projExpenses.index]
+  const handleEdit = (index) => {
+    setEx(projExpenses[index])
     setModal2(true);
   }
 
-  function handleClose() {
+  const handleClose = () => {
     setModal(false);
   }
 
-  function handleClose2() {
+  const handleClose2 = () => {
     console.log(modal2)
     setModal2(false);
   }
 
-  function handleSave() {
+  const handleSave = () => {
     // api call to save expense here
     setModal(false);
   }
 
-  function handleSave2() {
+  const handleSave2 = () => {
     // api call to edit expense here
     setModal2(false);
   }
@@ -133,9 +133,9 @@ function Project() {
               </Modal.Header>
               <Modal.Body>
                 <form onSubmit={handleSave2}>
-                    Name: <input name="name" label="name" handleChange={handleChange} autoFocus/><br/><br/>
-                    Description: <input name="description" label="description" handleChange={handleChange} autoFocus/><br/><br/>
-                    Amount: <input name="amount" label="name" handleChange={handleChange} autoFocus/><br/><br/>
+                    Name: <input name="name" label="name" value={ex.name} handleChange={handleChange} autoFocus/><br/><br/>
+                    Description:<textarea name="description" label="description" value={ex.description} handleChange={handleChange} autoFocus/><br/><br/>
+                    Amount: <input name="amount" label="name" value={ex.amount} handleChange={handleChange} autoFocus/><br/><br/>
                 </form>
               </Modal.Body>
               <Modal.Footer>
@@ -167,7 +167,7 @@ function Project() {
                       <Badge variant="primary" pill>
                         {formatPrice(exp.amount)}
                       </Badge>&nbsp;&nbsp;
-                      <Button onClick={handleEdit}> Edit Expense </Button>
+                      <Button onClick= {() => handleEdit(index)}> Edit Expense </Button>
                     </ListGroup.Item>
                   </>
                 ))
